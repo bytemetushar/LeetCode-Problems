@@ -1,0 +1,39 @@
+ public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head==null) return head;
+        while(head.val == val){
+            if(head.next == null){
+                return head = null;
+            }else{
+                ListNode x = head;
+                head = x.next;
+                x.next = null;
+            }
+        }
+
+        ListNode temp = head;
+        ListNode q = head.next;
+        while(q!=null){
+            if(q.val == val){
+                temp.next = q.next;
+                q.next =null;
+                q = temp.next;
+            }
+            else{
+                temp = temp.next;
+                q= q.next;
+            }
+        }
+
+        return head;
+    }   
+    
+}
