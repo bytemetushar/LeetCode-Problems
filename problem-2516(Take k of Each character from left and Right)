@@ -1,0 +1,32 @@
+class Solution {
+    public int takeCharacters(String s, int k) {
+        int[] tempArray=new int[3];
+        // count all the frq of String
+        for(char ch:s.toCharArray()){ 
+            tempArray[ch-'a']++;
+        }
+        // if total frq of any char is less than k return -1;
+        if(tempArray[0]<k||tempArray[1]<k||tempArray[2]<k) return -1;
+        int ans=tempArray[0]+tempArray[1]+tempArray[2];
+        int point=0;
+        
+        for(char ch:s.toCharArray()){
+            tempArray[ch-'a']--;
+            
+            // if any char length is less than k then increase Start position
+            if(tempArray[0]<k||tempArray[1]<k||tempArray[2]<k){
+                //get the min ans
+                ans=Math.min(tempArray[0]+tempArray[1]+tempArray[2]+1,ans);
+                while(s.charAt(point)!=ch){
+                    tempArray[s.charAt(point)-'a']++;
+                    point++;
+                }
+                tempArray[ch-'a']++;
+                point++;
+            }
+        }
+        ans=Math.min(tempArray[0]+tempArray[1]+tempArray[2],ans);
+                
+        return ans;
+    }
+}
