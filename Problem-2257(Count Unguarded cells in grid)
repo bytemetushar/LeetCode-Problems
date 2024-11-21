@@ -1,0 +1,47 @@
+class Solution {
+    int[][] grid;
+    int m,n;
+    public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
+        grid = new int[m][n];
+        this.m = m; this.n = n;
+        for(int[] gaurd: guards){
+            grid[gaurd[0]][gaurd[1]] = 2;
+        }
+        for(int[] wall: walls){
+            grid[wall[0]][wall[1]] = 3;
+        }
+        for(int[] gaurd : guards){
+            int i= gaurd[0];
+            int j= gaurd[1];
+            check(i-1,j,'U');
+            check(i+1,j,'D');
+            check(i,j+1,'R');
+            check(i,j-1,'L');
+        }
+        int ans = 0;
+        for(int i=0; i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==0) ans++;
+            }
+        }
+        return ans;
+    }
+    private void check(int i,int j, char ch){
+     // base condition--
+        if(i<0 || j<0 || i==m || j==n || grid[i][j]==2 || grid[i][j]==3){
+            return;
+        }
+
+        // gaurd that pos
+        grid[i][j] = 1;
+        //gaurd direction
+        if(ch=='U')
+            check(i-1,j,'U');
+        if(ch=='D')
+            check(i+1,j,'D');
+        if(ch=='R')
+            check(i,j+1,'R');
+        if(ch=='L')
+            check(i,j-1,'L');
+    }
+}
